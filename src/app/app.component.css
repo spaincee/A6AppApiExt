@@ -1,0 +1,36 @@
+header {
+  background-color: #3D348B;
+}
+
+header img {
+  max-width: 100px;
+}
+
+header .btn-primary {
+  background-color: #F35B04;
+  border-color: #F35B04;
+}
+
+header .btn-primary:hover {
+  background-color: #F7B801;
+  border-color: #F7B801;
+}
+
+header .btn-secondary {
+  background-color: #F18701;
+  border-color: #F18701;
+}
+
+header .btn-secondary:hover {
+  background-color: #F7B801;
+  border-color: #F7B801;
+}
+
+footer {
+  background-color: #7678ED;
+  text-align: center;
+}
+
+footer span {
+  color: #fff;
+}

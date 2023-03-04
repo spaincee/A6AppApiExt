@@ -1,0 +1,13 @@
+<section class="container mt-2">
+  <div class="row g-2">
+    <article class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3" *ngFor="let user of arrUsers">
+      <app-user-card [myUser]="user"></app-user-card>
+    </article>
+    <nav aria-label="Page navigation example" class="mt-5">
+      <ul class="pagination justify-content-center pagination-lg">
+        <li class="page-item"><button class="page-link previous" (click)="gotoPage(currentPage - 1)" [disabled]="currentPage === 1">Previous</button></li>
+        <li class="page-item"><button class="page-link next" (click)="gotoPage(currentPage + 1)" [disabled]="currentPage === totalPages">Next</button></li>
+      </ul>
+    </nav>
+  </div>
+</section>

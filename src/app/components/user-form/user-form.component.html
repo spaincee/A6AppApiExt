@@ -1,0 +1,27 @@
+<section class="container mt-2">
+<h1>{{ title }} usuario</h1>
+<app-notifications [msg]="msg" [type]="type"></app-notifications>
+<form novalidate [formGroup]="userForm" (ngSubmit)="getDataForm()">
+  <div>
+    <label for="first_name" class="form-label">Nombre</label>
+    <input class="form-control" type="text" id="first_name" formControlName="first_name">
+  </div>
+  <div>
+    <label for="last_name" class="form-label">Apellido</label>
+    <input class="form-control" type="text" id="last_name" formControlName="last_name">
+  </div>
+  <div>
+    <label for="username" class="form-label">Usuario</label>
+    <input class="form-control" type="text" id="username" formControlName="username">
+  </div>
+  <div>
+    <label for="email" class="form-label">Email</label>
+    <input class="form-control" type="text" id="email" formControlName="email">
+  </div>
+  <div>
+    <label for="avatar" class="form-label">Foto</label>
+    <input class="form-control" type="text" id="avatar" formControlName="image">
+  </div>
+  <input type="submit" value="Guardar" class="btn btn-primary mt-5">
+</form>
+</section>

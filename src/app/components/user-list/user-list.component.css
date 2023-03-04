@@ -1,0 +1,29 @@
+.previous {
+  background-color: #7678ED;
+  border-color: #7678ED;
+  color: #fff;
+}
+
+.next {
+  background-color: #3D348B;
+  border-color: #3D348B;
+  color: #fff;
+}
+
+.next:hover, .previous:hover {
+  background-color: #F35B04;
+  border-color: #F35B04; ;
+}
+
+button[disabled] {
+  background-color: #dbdbdb;
+  border-color: #dbdbdb;
+  color: #c1c1c1;
+}
+
+button[disabled]:hover {
+  background-color: #dbdbdb;
+  border-color: #dbdbdb;
+  color: #c1c1c1;
+  cursor: not-allowed;
+}
