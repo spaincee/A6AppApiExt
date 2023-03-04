@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UsersService } from 'src/app/services/users.service';
 import { User } from '../../interfaces/user.interface';
@@ -9,21 +9,41 @@ import { User } from '../../interfaces/user.interface';
   templateUrl: './user-form.component.html',
   styleUrls: ['./user-form.component.css']
 })
-export class UserFormComponent {
+export class UserFormComponent implements OnInit {
 
-  title: string = 'Registro';
+  title: string = 'Registrar';
   userForm: FormGroup;
   msg: string = "";
   type: string = "";
 
   constructor(private usersService: UsersService, private router: Router, private activatedRoute: ActivatedRoute) {
     this.userForm = new FormGroup({
-      first_name: new FormControl("", []),
-      last_name: new FormControl("", []),
-      username: new FormControl("", []),
-      email: new FormControl("", []),
-      image: new FormControl("", []),
-    }, []);
+      first_name: new FormControl("", [
+        Validators.required
+      ]),
+      last_name: new FormControl("", [
+        Validators.required
+      ]),
+      username: new FormControl("", [
+        Validators.required
+      ]),
+      email: new FormControl("", [
+        Validators.required,
+        Validators.pattern(/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/)
+      ]),
+      image: new FormControl("", [
+        Validators.required,
+        Validators.pattern(/(http|https|ftp|ftps)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?/)
+      ]),
+      password: new FormControl("", [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.maxLength(16)
+      ]),
+      confirmpassword: new FormControl("", [
+        Validators.required
+      ])
+    }, [this.checkPassword]);
   }
 
   ngOnInit(): void {
@@ -37,44 +57,91 @@ export class UserFormComponent {
 
       this.userForm = new FormGroup({
         id: new FormControl(id, []),
-        first_name: new FormControl(user?.first_name, []),
-        last_name: new FormControl(user?.last_name, []),
-        username: new FormControl(user?.username, []),
-        email: new FormControl(user?.email, []),
-        image: new FormControl(user?.image, []),
-      }, []);
+        first_name: new FormControl(user?.first_name, [
+          Validators.required
+        ]),
+        last_name: new FormControl(user?.last_name, [
+          Validators.required
+        ]),
+        username: new FormControl(user?.username, [
+          Validators.required
+        ]),
+        email: new FormControl(user?.email, [
+          Validators.required,
+          Validators.pattern(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)
+        ]),
+        image: new FormControl(user?.image, [
+          Validators.required,
+          Validators.pattern(/(http|https|ftp|ftps)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?/)
+        ]),
+        password: new FormControl(user?.password, [
+          Validators.required,
+          Validators.minLength(8),
+          Validators.maxLength(16)
+        ]),
+        confirmpassword: new FormControl("", [
+          Validators.required
+        ])
+      }, [this.checkPassword]);
       }
     })
   }
 
   async getDataForm() {
-    let user = this.userForm.value
+    let user = this.userForm.value;
      if (user.id) {
-      //Actualizando
-      console.log('Actualizar');
-      this.usersService.update(user).subscribe((response: User) => {
+      //Update
+      console.log('Update User');
+
+      try {
+        let response = await this.usersService.update(user);
         if (response._id) {
-          this.msg = `Usuario ${response.first_name} ${response.last_name} con id ${response.id} se actualizado correctamente`
+          console.log(response);
+          this.msg = `Se ha Actualizado el Usuario ${response.first_name} ${response.last_name} con id: ${response._id}`;
           this.type = 'success';
-          //this.router.navigate(['/home']);
+          console.log(this.type);
+          console.log(this.msg);
         }
-      });
+      }
+      catch (err) {
+        console.log(err)
+      }
+
 
     } else {
-      //Registrando
-      console.log('Crear');
+      //Create
+      console.log('Create New User');
+
+      
       try {
         let response = await this.usersService.create(user);
         if (response.id) {
-          this.msg = `Se ha credo el Usuario ${response.first_name} ${response.last_name} con id ${response.id}`;
+          console.log(response);
+          this.msg = `Se ha creado el Usuario ${response.first_name} ${response.last_name} con id: ${response.id}`;
           this.type = 'success';
           console.log(this.msg);
-          //this.router.navigate(['/home']);
         }
       }
       catch (err) {
         console.log(err)
       }
     }
+  }
+
+  checkControl(pControlName: string, pError: string): boolean {
+    if (this.userForm.get(pControlName)?.hasError(pError) && this.userForm.get(pControlName)?.touched) {
+      return true;
+    }
+    return false;
+  }
+
+  checkPassword(pFormValue: AbstractControl) {
+    const password: string = pFormValue.get('password')?.value;
+    const confirmpassword: string = pFormValue.get('confirmpassword')?.value;
+
+    if (password !== confirmpassword) {
+      return { 'checkpassword': true }
+    }
+    return null
   }
 }

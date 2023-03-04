@@ -23,8 +23,8 @@ export class UsersService {
     return lastValueFrom(this.httpClient.post<User>(this.baseUrl, pUser))
   }
 
-  update(pUser: User): Observable<User> {
-    return this.httpClient.put<User>(`${this.baseUrl}${pUser.id}`, pUser)
+  update(pUser: User): Promise<User> {
+    return lastValueFrom(this.httpClient.put<User>(`${this.baseUrl}${pUser.id}`, pUser))
   }
 
   delete(pId: string): Promise<any> {

@@ -1,27 +1,50 @@
 <section class="container mt-2">
-<h1>{{ title }} usuario</h1>
+<h1>{{ title }} Usuario</h1>
+<hr>
 <app-notifications [msg]="msg" [type]="type"></app-notifications>
 <form novalidate [formGroup]="userForm" (ngSubmit)="getDataForm()">
-  <div>
-    <label for="first_name" class="form-label">Nombre</label>
+  <div class="my-2">
+    <label for="first_name" class="form-label">Nombre (*)</label>
     <input class="form-control" type="text" id="first_name" formControlName="first_name">
+    <p class="error" *ngIf="checkControl('first_name', 'required')">El Campo es Obligatorio</p>
   </div>
-  <div>
-    <label for="last_name" class="form-label">Apellido</label>
+  <div class="my-2">
+    <label for="last_name" class="form-label">Apellido (*)</label>
     <input class="form-control" type="text" id="last_name" formControlName="last_name">
+    <p class="error" *ngIf="checkControl('last_name', 'required')">El Campo es Obligatorio</p>
   </div>
-  <div>
-    <label for="username" class="form-label">Usuario</label>
+  <div class="my-2">
+    <label for="username" class="form-label">Usuario (*)</label>
     <input class="form-control" type="text" id="username" formControlName="username">
+    <p class="error" *ngIf="checkControl('username', 'required')">El Campo es Obligatorio</p>
   </div>
-  <div>
-    <label for="email" class="form-label">Email</label>
-    <input class="form-control" type="text" id="email" formControlName="email">
+  <div class="my-2">
+    <label for="email" class="form-label">Email (*)</label>
+    <input class="form-control" type="mail" id="email" formControlName="email">
+    <p class="error" *ngIf="checkControl('email', 'required')">El Campo es Obligatorio</p>
+    <p class="error" *ngIf="checkControl('email', 'pattern')">Escriba un Email Válido</p>
   </div>
-  <div>
-    <label for="avatar" class="form-label">Foto</label>
-    <input class="form-control" type="text" id="avatar" formControlName="image">
+  <div class="my-2">
+    <label for="image" class="form-label">Foto de Perfil (*)</label>
+    <input class="form-control" type="text" id="image" formControlName="image">
+    <p class="error" *ngIf="checkControl('image', 'required')">El Campo es Obligatorio</p>
+    <p class="error" *ngIf="checkControl('image', 'pattern')">Escriba una URL de imagen Válida</p>
   </div>
-  <input type="submit" value="Guardar" class="btn btn-primary mt-5">
+  <div class="my-2">
+    <label for="password" class="form-label">Password (*)</label>
+    <input class="form-control" type="password" id="password" formControlName="password">
+    <p class="error" *ngIf="checkControl('password', 'required')">El Campo es Obligatorio</p>
+    <p class="error" *ngIf="checkControl('password', 'minlength')">Debe contener entre 8 y 16 Caracteres</p>
+    <p class="error" *ngIf="checkControl('password', 'maxlength')">Debe contener entre 8 y 16 Caracteres</p>
+  </div>
+  <div class="my-2">
+    <label for="confirmpassword" class="form-label">Confirmar Password (*)</label>
+    <input class="form-control" type="password" id="confirmpassword" formControlName="confirmpassword">
+    <p class="error" *ngIf="checkControl('confirmpassword', 'required')">El Campo es Obligatorio</p>
+    <p class="error" *ngIf="userForm.hasError('checkpassword')">Las contraseñas no coinciden</p>
+  </div>
+
+  <input type="submit" value="Guardar" class="btn btn-primary mt-5" [disabled]="!userForm.valid">
+  
 </form>
 </section>

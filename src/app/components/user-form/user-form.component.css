@@ -7,3 +7,27 @@
   background-color: #3D348B;
   border-color: #3D348B;
 }
+
+.error {
+  color: orangered;
+}
+
+input.ng-invalid.ng-touched {
+  border-bottom: 2px solid orangered;
+}
+
+input.ng-valid.ng-touched {
+  border-bottom: 2px solid green;
+}
+
+h1 {
+  font-weight: bold;
+}
+
+form {
+  max-width: 700px;
+}
+
+.alert {
+  display: flex;
+}

@@ -1,0 +1,8 @@
+.alert {
+  display: flex;
+  align-items: center;
+}
+
+.alert p {
+  margin: 0 !important;
+}
