@@ -91,7 +91,7 @@ export class UserFormComponent implements OnInit {
     let user = this.userForm.value;
      if (user.id) {
       //Update
-      console.log('Update User');
+      console.log('Updated User');
 
       try {
         let response = await this.usersService.update(user);
@@ -104,15 +104,13 @@ export class UserFormComponent implements OnInit {
         }
       }
       catch (err) {
-        console.log(err)
+        console.log(err);
       }
 
 
     } else {
       //Create
-      console.log('Create New User');
-
-      
+      console.log('Created New User');  
       try {
         let response = await this.usersService.create(user);
         if (response.id) {
@@ -123,7 +121,7 @@ export class UserFormComponent implements OnInit {
         }
       }
       catch (err) {
-        console.log(err)
+        console.log(err);
       }
     }
   }
@@ -138,10 +136,9 @@ export class UserFormComponent implements OnInit {
   checkPassword(pFormValue: AbstractControl) {
     const password: string = pFormValue.get('password')?.value;
     const confirmpassword: string = pFormValue.get('confirmpassword')?.value;
-
     if (password !== confirmpassword) {
-      return { 'checkpassword': true }
+      return { 'checkpassword': true };
     }
-    return null
+    return null;
   }
 }

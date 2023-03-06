@@ -16,7 +16,7 @@ export class UserListComponent implements OnInit {
   constructor(private usersService: UsersService) {}
 
   ngOnInit(): void {
-    this.gotoPage()
+    this.gotoPage();
   }
 
   async gotoPage(pNum: number = 1): Promise<void> {

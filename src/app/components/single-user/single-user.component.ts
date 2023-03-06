@@ -20,7 +20,6 @@ export class SingleUserComponent {
       let response: any = await this.usersServices.getById(_id);
       this.user = response;
     })
-
   }
 
   async deleteUser(pId: string | undefined): Promise<void> {

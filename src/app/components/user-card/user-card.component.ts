@@ -18,6 +18,7 @@ export class UserCardComponent  {
       try {
         let response = await this.usersServices.delete(pId);
         if (response._id ) {
+          console.log(response);
           alert('El Usuario ' + response.first_name + ' ' + response.last_name + ' ha sido eliminado Satisfactoriamente');
         } else {
           alert(response.error);
